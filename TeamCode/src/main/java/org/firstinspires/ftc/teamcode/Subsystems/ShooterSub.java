@@ -36,8 +36,8 @@ public class ShooterSub extends SubsystemBase {
         leftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        leftShooter.setVelocityPIDFCoefficients(25,0,0.1,2);
-        rightShooter.setVelocityPIDFCoefficients(25,0,0.1,2);
+        leftShooter.setVelocityPIDFCoefficients(30,0,0.15,2.5);
+        rightShooter.setVelocityPIDFCoefficients(30,0,0.15,2.5);
 
 
     }

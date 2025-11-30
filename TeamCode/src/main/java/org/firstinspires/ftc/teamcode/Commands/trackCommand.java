@@ -2,17 +2,15 @@ package org.firstinspires.ftc.teamcode.Commands;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsystems.IndexerSub;
-import org.firstinspires.ftc.teamcode.Subsystems.IntakeSub;
 import org.firstinspires.ftc.teamcode.Subsystems.LightsSub;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSub;
 
-public class shootCommand extends CommandBase {
+public class trackCommand extends CommandBase {
 
     private final LightsSub lights;
     private final ShooterSub shooter;
 
-    public shootCommand(LightsSub lightsSub, ShooterSub shooterSub){
+    public trackCommand(LightsSub lightsSub, ShooterSub shooterSub){
         lights = lightsSub;
         shooter = shooterSub;
         addRequirements(lights, shooter);
