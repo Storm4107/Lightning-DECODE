@@ -33,7 +33,7 @@ public class IndexerSub extends SubsystemBase {
         switch (currentState) {
             case IDLE:
                 indexer.setPower(0);
-                ramp.setPosition(0.55);
+                ramp.setPosition(0.6);
                 break;
 
             case INTAKING:

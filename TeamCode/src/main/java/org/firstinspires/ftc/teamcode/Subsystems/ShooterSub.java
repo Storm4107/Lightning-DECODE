@@ -1,17 +1,11 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.AnalogSensor;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
-import com.seattlesolvers.solverslib.controller.PIDFController;
-import com.seattlesolvers.solverslib.hardware.motors.Motor;
-import com.seattlesolvers.solverslib.hardware.motors.MotorGroup;
 
 public class ShooterSub extends SubsystemBase {
 
@@ -20,7 +14,7 @@ public class ShooterSub extends SubsystemBase {
 
     private final Servo hood;
 
-    public enum shooterStates{ SHOOT, IDLE}
+    public enum shooterStates{ LONGSHOT, MIDSHOT, SHORTSHOT, IDLE}
 
     private shooterStates currentState = shooterStates.IDLE;
 
@@ -39,7 +33,7 @@ public class ShooterSub extends SubsystemBase {
         leftShooter.setVelocityPIDFCoefficients(30,0,0.15,2.5);
         rightShooter.setVelocityPIDFCoefficients(30,0,0.15,2.5);
 
-
+        hood.setDirection(Servo.Direction.REVERSE);
     }
 
     public void setState(ShooterSub.shooterStates newState) {
@@ -57,14 +51,28 @@ public class ShooterSub extends SubsystemBase {
     @Override
     public void periodic() {
         switch (currentState) {
-            case SHOOT:
+            case LONGSHOT:
                 rightShooter.setVelocity(6000);
                 leftShooter.setVelocity(6000);
+                hood.setPosition(.7);
+                break;
+
+            case MIDSHOT:
+                rightShooter.setVelocity(5000);
+                leftShooter.setVelocity(5000);
+                hood.setPosition(.7);
+                break;
+
+            case SHORTSHOT:
+                rightShooter.setVelocity(4000);
+                leftShooter.setVelocity(4000);
+                hood.setPosition(.2);
                 break;
 
             case IDLE:
                 rightShooter.setVelocity(0);
                 leftShooter.setVelocity(0);
+                hood.setPosition(0);
                 break;
         }
     }

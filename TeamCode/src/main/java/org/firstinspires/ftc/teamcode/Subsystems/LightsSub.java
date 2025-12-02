@@ -8,7 +8,7 @@ public class LightsSub extends SubsystemBase {
 
     private final RevBlinkinLedDriver lights;
 
-    public enum lightStates {IDLE, INTAKING, SHOOTING, INDEXING, ERROR}
+    public enum lightStates {IDLE, INTAKING, SHOOTING, INDEXING, ERROR, LOCKED}
 
     private lightStates currentState = lightStates.IDLE;
 
@@ -36,6 +36,10 @@ public class LightsSub extends SubsystemBase {
 
             case SHOOTING:
                 lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.STROBE_RED);
+                break;
+
+            case LOCKED:
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_GREEN);
         }
     }
 }

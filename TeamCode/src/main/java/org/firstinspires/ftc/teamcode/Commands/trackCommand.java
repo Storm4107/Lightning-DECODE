@@ -3,27 +3,28 @@ package org.firstinspires.ftc.teamcode.Commands;
 import com.seattlesolvers.solverslib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Subsystems.LightsSub;
-import org.firstinspires.ftc.teamcode.Subsystems.ShooterSub;
+import org.firstinspires.ftc.teamcode.Subsystems.VisionSub;
 
 public class trackCommand extends CommandBase {
 
     private final LightsSub lights;
-    private final ShooterSub shooter;
+    private final VisionSub vision;
 
-    public trackCommand(LightsSub lightsSub, ShooterSub shooterSub){
+    public trackCommand(LightsSub lightsSub, VisionSub visionSub){
         lights = lightsSub;
-        shooter = shooterSub;
-        addRequirements(lights, shooter);
+        vision = visionSub;
+        addRequirements(lights, vision);
     }
 
-    public void initialize() {
-        lights.setState(LightsSub.lightStates.SHOOTING);
-        shooter.setState(ShooterSub.shooterStates.SHOOT);
+    @Override
+    public void execute() {
+        if (vision.seesRedTarget()) {
+            lights.setState(LightsSub.lightStates.LOCKED);
+        } else lights.setState(LightsSub.lightStates.IDLE);
     }
 
     @Override
     public void end(boolean interrupted) {
         lights.setState(LightsSub.lightStates.IDLE);
-        shooter.setState(ShooterSub.shooterStates.IDLE);
     }
 }
