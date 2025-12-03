@@ -11,8 +11,13 @@ public class VisionSub extends SubsystemBase {
     private final Limelight3A limelight;
 
     private static final int RED_TARGET = 24;
+    private static final int BLUE_TARGET = 20;
 
-    private boolean seesRedTarget = false;
+    public double redAngleOfTarget;
+    public double redDistanceFromTarget;
+
+    public double blueAngleOfTarget;
+    public double blueDistanceFromTarget;
 
     public VisionSub(HardwareMap hMap) {
         limelight = hMap.get(Limelight3A.class, "limelight");
@@ -24,23 +29,26 @@ public class VisionSub extends SubsystemBase {
     public void periodic() {
         LLResult result = limelight.getLatestResult();
 
-        seesRedTarget = false;
 
         if (result != null && result.isValid()) {
 
-            for (LLResultTypes.FiducialResult tag : result.getFiducialResults()) {
+            for (LLResultTypes.FiducialResult redTag : result.getFiducialResults()) {
 
-                if (tag.getFiducialId() == RED_TARGET) {
+                if (redTag.getFiducialId() == RED_TARGET) {
+                    redAngleOfTarget = redTag.getTargetXDegrees();
+                    redDistanceFromTarget = redTag.getTargetArea();
+                    return;
+                }
+            }
 
-                    if (Math.abs(result.getTx()) <= 10) {
-                        seesRedTarget = true;
-                    }
+            for (LLResultTypes.FiducialResult blueTag : result.getFiducialResults()) {
+
+                if (blueTag.getFiducialId() == BLUE_TARGET) {
+                    blueAngleOfTarget = blueTag.getTargetXDegrees();
+                    blueDistanceFromTarget = blueTag.getTargetArea();
+                    return;
                 }
             }
         }
-    }
-
-    public boolean seesRedTarget() {
-        return seesRedTarget;
     }
 }

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.RobotContainer;
@@ -30,6 +32,7 @@ public class GPPTele extends CommandOpMode {
         telemetry.addData("Indexer State",  robot.indexerSub.getCurrentState());
         telemetry.addData("Shooter State",  robot.shooterSub.getCurrentState());
         telemetry.addData("Shooter RPM",    robot.shooterSub.getShooterVelocity());
+        telemetry.addData("Heading", follower.getPose().getHeading());
         telemetry.update();
     }
 }

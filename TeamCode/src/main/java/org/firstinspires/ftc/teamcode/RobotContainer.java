@@ -7,9 +7,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
+import org.firstinspires.ftc.teamcode.Commands.BLUEtrackCommand;
+import org.firstinspires.ftc.teamcode.Commands.REDtrackCommand;
+import org.firstinspires.ftc.teamcode.Commands.ShootCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeCommand;
-import org.firstinspires.ftc.teamcode.Commands.longShotCommand;
-import org.firstinspires.ftc.teamcode.Commands.trackCommand;
 import org.firstinspires.ftc.teamcode.Subsystems.IndexerSub;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSub;
 import org.firstinspires.ftc.teamcode.Subsystems.LightsSub;
@@ -49,14 +50,21 @@ public class RobotContainer {
 
     private void configureBindings() {
 
-        operator.getGamepadButton(GamepadKeys.Button.A)
-                .whileHeld(new intakeCommand(intakeSub, lightsSub, indexerSub));
+        //OPERATOR
 
-        operator.getGamepadButton(GamepadKeys.Button.B)
-                .whileHeld(new longShotCommand(lightsSub,shooterSub,indexerSub,intakeSub));
+        operator.getGamepadButton(GamepadKeys.Button.A)
+                .whileHeld(new intakeCommand(intakeSub, indexerSub));
 
         operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whileHeld(new trackCommand(lightsSub, visionSub));
+                .whileHeld(new REDtrackCommand(lightsSub, visionSub, shooterSub));
+
+        operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whileHeld(new BLUEtrackCommand(lightsSub, visionSub, shooterSub));
+
+        operator.getGamepadButton(GamepadKeys.Button.B)
+                .whileHeld(new ShootCommand(intakeSub, indexerSub));
+
+        //DRIVER
 
         driver.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(() -> follower.setPose(new Pose(0,0,0)));

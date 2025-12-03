@@ -8,7 +8,7 @@ public class LightsSub extends SubsystemBase {
 
     private final RevBlinkinLedDriver lights;
 
-    public enum lightStates {IDLE, INTAKING, SHOOTING, INDEXING, ERROR, LOCKED}
+    public enum lightStates {IDLE, SHOOTING, LOCKEDRED, LOCKEDBLUE}
 
     private lightStates currentState = lightStates.IDLE;
 
@@ -27,19 +27,16 @@ public class LightsSub extends SubsystemBase {
     public void periodic(){
         switch (currentState) {
             case IDLE:
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.BREATH_BLUE);
-                break;
-
-            case INTAKING:
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.CP1_2_COLOR_GRADIENT);
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.HOT_PINK);
                 break;
 
             case SHOOTING:
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.STROBE_RED);
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_GREEN);
                 break;
 
-            case LOCKED:
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_GREEN);
+            case LOCKEDRED:
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_RED);
+                break;
         }
     }
 }

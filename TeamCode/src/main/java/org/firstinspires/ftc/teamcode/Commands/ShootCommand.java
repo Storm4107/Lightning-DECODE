@@ -4,22 +4,24 @@ import com.seattlesolvers.solverslib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Subsystems.IndexerSub;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSub;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterSub;
 
-public class intakeCommand extends CommandBase {
+public class ShootCommand extends CommandBase {
 
-    private final IntakeSub intake;
-    private final IndexerSub indexer;
+    public final IntakeSub intake;
+    public final IndexerSub indexer;
 
-    public intakeCommand(IntakeSub intakeSub, IndexerSub indexerSub){
+    public ShootCommand(IntakeSub intakeSub, IndexerSub indexerSub){
+
         intake = intakeSub;
         indexer = indexerSub;
-        addRequirements(intake);
+        addRequirements(indexer, intake);
     }
 
     @Override
     public void initialize() {
         intake.setState(IntakeSub.intakeStates.INTAKE);
-        indexer.setState(IndexerSub.indexerStates.INTAKING);
+        indexer.setState(IndexerSub.indexerStates.RAPIDFIRE);
     }
 
     @Override

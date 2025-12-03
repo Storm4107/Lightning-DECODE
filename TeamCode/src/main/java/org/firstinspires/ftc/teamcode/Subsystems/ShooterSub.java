@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
+import com.seattlesolvers.solverslib.hardware.motors.CRServo;
+import com.seattlesolvers.solverslib.hardware.motors.CRServoGroup;
 
 public class ShooterSub extends SubsystemBase {
 
@@ -14,7 +16,11 @@ public class ShooterSub extends SubsystemBase {
 
     private final Servo hood;
 
-    public enum shooterStates{ LONGSHOT, MIDSHOT, SHORTSHOT, IDLE}
+    private final CRServoGroup turret;
+
+    private final CRServo frontTurret, backTurret;
+
+    public enum shooterStates{IDLE,SHOOT, CW, CCW, STOPTURRET} // cw means cloclwise and ccw means coutnerclockwise
 
     private shooterStates currentState = shooterStates.IDLE;
 
@@ -24,6 +30,13 @@ public class ShooterSub extends SubsystemBase {
         leftShooter = hMap.get(DcMotorEx.class,"leftShooter");
         rightShooter = hMap.get(DcMotorEx.class, "rightShooter");
         hood = hMap.get(Servo.class, "hood");
+
+        frontTurret = new CRServo(hMap, "frontTurret");
+        backTurret  = new CRServo(hMap, "backTurret");
+
+        frontTurret.setInverted(true);
+
+        turret = new CRServoGroup(frontTurret, backTurret);
 
         rightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -51,29 +64,32 @@ public class ShooterSub extends SubsystemBase {
     @Override
     public void periodic() {
         switch (currentState) {
-            case LONGSHOT:
-                rightShooter.setVelocity(6000);
-                leftShooter.setVelocity(6000);
-                hood.setPosition(.7);
-                break;
-
-            case MIDSHOT:
-                rightShooter.setVelocity(5000);
-                leftShooter.setVelocity(5000);
-                hood.setPosition(.7);
-                break;
-
-            case SHORTSHOT:
-                rightShooter.setVelocity(4000);
-                leftShooter.setVelocity(4000);
-                hood.setPosition(.2);
-                break;
 
             case IDLE:
                 rightShooter.setVelocity(0);
                 leftShooter.setVelocity(0);
                 hood.setPosition(0);
                 break;
+
+            case SHOOT:
+                hood.setPosition(.7);
+                break;
+
+            case CCW:
+                turret.set(1);
+                break;
+
+            case CW:
+                turret.set(-1);
+                break;
+
+            case STOPTURRET:
+                turret.set(0);
+                break;
         }
+    }
+
+    public double variableShot(double distance){
+        return distance;
     }
 }
