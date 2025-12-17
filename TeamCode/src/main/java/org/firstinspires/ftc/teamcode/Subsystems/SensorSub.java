@@ -24,7 +24,11 @@ public class SensorSub extends SubsystemBase {
         return currentState;
     }
 
-    private boolean seesArtifact(ColorSensor s) {
+    public double artifactDistance() {
+        return (frontSensor.alpha());
+    }
+
+    public boolean seesArtifact(ColorSensor s) {
         return ((DistanceSensor)s).getDistance(DistanceUnit.MM) < 40;
     }
 
@@ -37,11 +41,11 @@ public class SensorSub extends SubsystemBase {
     }
 
     private void updateState() {
-
     }
 
     @Override
     public void periodic() {
+
         updateState();
     }
 }

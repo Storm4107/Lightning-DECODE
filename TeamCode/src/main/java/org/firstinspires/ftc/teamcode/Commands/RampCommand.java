@@ -5,27 +5,28 @@ import org.firstinspires.ftc.teamcode.Subsystems.IndexerSub;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSub;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSub;
 
-public class ShootCommand extends CommandBase {
+public class RampCommand extends CommandBase {
 
-    private final IntakeSub intake;
     private final ShooterSub shooter;
 
-    public ShootCommand(IntakeSub intakeSub,ShooterSub shooterSub){
-        intake = intakeSub;
-        shooter = shooterSub;
+    private final boolean close;
 
-        addRequirements(intakeSub);
+    public RampCommand(ShooterSub shooterSub, boolean Close){
+        shooter = shooterSub;
+        this.close = Close;
     }
 
     @Override
-    public void initialize() {
-        intake.setState(IntakeSub.intakeStates.INTAKE);
-        shooter.setState(ShooterSub.shooterStates.CLOSESHOT);
+    public void execute() {
+        if (close) {
+            shooter.setState(ShooterSub.shooterStates.SHORTRAMP);
+        } else {
+            shooter.setState(ShooterSub.shooterStates.FARRAMP);
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
-        intake.setState(IntakeSub.intakeStates.IDLE);
         shooter.setState(ShooterSub.shooterStates.IDLE);
     }
 }

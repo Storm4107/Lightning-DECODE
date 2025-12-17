@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
-import com.seattlesolvers.solverslib.hardware.motors.CRServo;
-import com.seattlesolvers.solverslib.hardware.motors.CRServoGroup;
 
 public class ShooterSub extends SubsystemBase {
 
@@ -16,11 +14,9 @@ public class ShooterSub extends SubsystemBase {
 
     private final Servo hood;
 
-    private final CRServoGroup turret;
+    private final Servo frontTurret, backTurret;
 
-    private final CRServo frontTurret, backTurret;
-
-    public enum shooterStates{IDLE,SHOOT, CW, CCW, STOPTURRET} // cw means cloclwise and ccw means coutnerclockwise
+    public enum shooterStates{IDLE, CLOSESHOT, LEFTAIM, RIGHTAIM, SHORTRAMP, FARRAMP}
 
     private shooterStates currentState = shooterStates.IDLE;
 
@@ -31,20 +27,18 @@ public class ShooterSub extends SubsystemBase {
         rightShooter = hMap.get(DcMotorEx.class, "rightShooter");
         hood = hMap.get(Servo.class, "hood");
 
-        frontTurret = new CRServo(hMap, "frontTurret");
-        backTurret  = new CRServo(hMap, "backTurret");
+        frontTurret = hMap.get(Servo.class, "frontTurret");
+        backTurret = hMap.get(Servo.class, "backTurret");
 
-        frontTurret.setInverted(true);
-
-        turret = new CRServoGroup(frontTurret, backTurret);
+        frontTurret.setDirection(Servo.Direction.REVERSE);
 
         rightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        leftShooter.setVelocityPIDFCoefficients(30,0,0.15,2.5);
-        rightShooter.setVelocityPIDFCoefficients(30,0,0.15,2.5);
+        leftShooter.setVelocityPIDFCoefficients(35,0,0.8,3);
+        rightShooter.setVelocityPIDFCoefficients(35,0,0.8,3);
 
         hood.setDirection(Servo.Direction.REVERSE);
     }
@@ -69,27 +63,44 @@ public class ShooterSub extends SubsystemBase {
                 rightShooter.setVelocity(0);
                 leftShooter.setVelocity(0);
                 hood.setPosition(0);
+                frontTurret.setPosition(0.39);
+                backTurret.setPosition(0.39);// this is "0" for our case
                 break;
 
-            case SHOOT:
-                hood.setPosition(.7);
+            case CLOSESHOT:
+                rightShooter.setVelocity(2400);
+                leftShooter.setVelocity(2400);
+                frontTurret.setPosition(0.39);
+                backTurret.setPosition(0.39);
+                hood.setPosition(.45);
                 break;
 
-            case CCW:
-                turret.set(1);
+            case LEFTAIM:
+                frontTurret.setPosition(.2);
+                backTurret.setPosition(.2);
+                rightShooter.setVelocity(5250);
+                leftShooter.setVelocity(5250);
+                hood.setPosition(.6);
                 break;
 
-            case CW:
-                turret.set(-1);
+            case RIGHTAIM:
+                frontTurret.setPosition(.65);
+                backTurret.setPosition(.65);
+                rightShooter.setVelocity(5250);
+                leftShooter.setVelocity(5250);
+                hood.setPosition(.6);
                 break;
 
-            case STOPTURRET:
-                turret.set(0);
+            case FARRAMP:
+                rightShooter.setVelocity(5500);
+                leftShooter.setVelocity(5500);
+                break;
+
+            case SHORTRAMP:
+                rightShooter.setVelocity(2400);
+                leftShooter.setVelocity(2400);
+                hood.setPosition(.45);
                 break;
         }
-    }
-
-    public double variableShot(double distance){
-        return distance;
     }
 }

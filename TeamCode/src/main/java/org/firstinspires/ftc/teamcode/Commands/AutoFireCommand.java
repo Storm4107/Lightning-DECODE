@@ -5,27 +5,27 @@ import org.firstinspires.ftc.teamcode.Subsystems.IndexerSub;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSub;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSub;
 
-public class ShootCommand extends CommandBase {
+public class AutoFireCommand extends CommandBase {
 
     private final IntakeSub intake;
-    private final ShooterSub shooter;
+    private final IndexerSub indexer;
 
-    public ShootCommand(IntakeSub intakeSub,ShooterSub shooterSub){
+    public AutoFireCommand(IntakeSub intakeSub, IndexerSub indexerSub){
         intake = intakeSub;
-        shooter = shooterSub;
+        indexer = indexerSub;
 
-        addRequirements(intakeSub);
+        addRequirements(intakeSub, indexerSub);
     }
 
     @Override
     public void initialize() {
         intake.setState(IntakeSub.intakeStates.INTAKE);
-        shooter.setState(ShooterSub.shooterStates.CLOSESHOT);
+        indexer.setState(IndexerSub.indexerStates.RAPIDFIRE);
     }
 
     @Override
     public void end(boolean interrupted) {
         intake.setState(IntakeSub.intakeStates.IDLE);
-        shooter.setState(ShooterSub.shooterStates.IDLE);
+        indexer.setState(IndexerSub.indexerStates.IDLE);
     }
 }

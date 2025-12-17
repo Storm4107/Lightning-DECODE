@@ -37,6 +37,9 @@ public class LightsSub extends SubsystemBase {
             case LOCKEDRED:
                 lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_RED);
                 break;
+
+            case LOCKEDBLUE:
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_BLUE);
         }
     }
 }
