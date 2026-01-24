@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsytems;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,28 +10,32 @@ import com.seattlesolvers.solverslib.controller.PIDFController;
 
 public class ShooterSub extends SubsystemBase {
 
-    private final DcMotorEx leftShooter;
-    private final DcMotorEx rightShooter;
+    private final DcMotorEx leftShooter, rightShooter;
+    private final DcMotorEx turret;
     private final Servo door;
     private final Servo hood;
 
     public enum ShooterState {
         IDLE,
-        SHORTSHOT,
-        LONGSHOT
+        OPEN,
+        CLOSE
     }
 
     private ShooterState currentState = ShooterState.IDLE;
 
-    private final PIDFController pidf =
+    private final PIDFController shooterPIDF =
             new PIDFController(0.019, 0.0000, 0.0000, 0);
 
-    private double targetVelocity = 0;
+    private final PIDFController turretPIDF =
+            new PIDFController(0,0,0,0);
+
+    private double shooterTargetVelocity = 0;
 
     public ShooterSub(HardwareMap hMap) {
 
         leftShooter = hMap.get(DcMotorEx.class,"leftShooter");
         rightShooter = hMap.get(DcMotorEx.class,"rightShooter");
+        turret = hMap.get(DcMotorEx.class,"turret");
         door = hMap.get(Servo.class,"door");
         hood = hMap.get(Servo.class,"hood");
 
@@ -39,31 +44,26 @@ public class ShooterSub extends SubsystemBase {
         leftShooter.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         rightShooter.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        pidf.setTolerance(50); // velocity tolerance
+        turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        shooterPIDF.setTolerance(50); // velocity tolerance
+        turretPIDF.setTolerance(13);  //4,735 this many ticks per full revolution of the turret. the tolerance now will be set to 1 degree
     }
 
     public void setState(ShooterState newState) {
         if (newState != currentState) {
-            pidf.reset();
+            shooterPIDF.reset();
         }
 
         currentState = newState;
 
         switch (newState) {
             case IDLE:
-                targetVelocity = 0;
-                break;
-
-            case SHORTSHOT:
-                targetVelocity = 1400;
-                break;
-
-            case LONGSHOT:
-                targetVelocity = 2700;
+                shooterTargetVelocity = 0;
                 break;
         }
 
-        pidf.setSetPoint(targetVelocity);
+        shooterPIDF.setSetPoint(shooterTargetVelocity);
     }
 
     public ShooterState getCurrentState() {
@@ -75,14 +75,14 @@ public class ShooterSub extends SubsystemBase {
     }
 
     public boolean atSpeed() {
-        return pidf.atSetPoint();
+        return shooterPIDF.atSetPoint();
     }
 
     @Override
     public void periodic() {
 
         double velocity = leftShooter.getVelocity();
-        double power = pidf.calculate(velocity);
+        double power = shooterPIDF.calculate(velocity);
 
         power = Math.max(-1.0, Math.min(1.0, power));
 
@@ -94,18 +94,12 @@ public class ShooterSub extends SubsystemBase {
                 hood.setPosition(0);
                 break;
 
-            case SHORTSHOT:
-                leftShooter.setPower(power);
-                rightShooter.setPower(power);
+            case OPEN:
                 door.setPosition(0);
-                hood.setPosition(0.9);
                 break;
 
-            case LONGSHOT:
-                leftShooter.setPower(power);
-                rightShooter.setPower(power);
-                door.setPosition(0);
-                hood.setPosition(0.95);
+            case CLOSE:
+                door.setPosition(1);
                 break;
         }
     }

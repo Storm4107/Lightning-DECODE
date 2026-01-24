@@ -30,7 +30,6 @@ public class SingleDriver extends CommandOpMode {
 
         telemetry.addData("Intake State",   robot.intakeSub.getCurrentState());
         telemetry.addData("Shooter State",   robot.shooterSub.getCurrentState());
-        telemetry.addData("Light State",   robot.lightSub.getCurrentState());
         telemetry.addData("ShooterRPM",   robot.shooterSub.getShooterVelocity());
         telemetry.update();
     }
