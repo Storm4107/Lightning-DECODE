@@ -8,6 +8,7 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.IntakeCommand;
+import org.firstinspires.ftc.teamcode.Commands.TurretCommand;
 import org.firstinspires.ftc.teamcode.Subsytems.IntakeSub;
 import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
@@ -19,7 +20,9 @@ public class RobotContainer {
     public final IntakeSub intakeSub;
     public final ShooterSub shooterSub;
 
-    public final Follower follower;
+    public final TurretCommand turretCommand;
+
+    public final Follower follower ;
     public Telemetry telemetry;
 
     public RobotContainer(HardwareMap hardwareMap, Gamepad driver) {
@@ -31,10 +34,13 @@ public class RobotContainer {
         intakeSub = new IntakeSub(hardwareMap);
         shooterSub = new ShooterSub(hardwareMap);
 
+
         follower = Constants.createFollower(hardwareMap);
 
         configureSingleBindings();
         follower.startTeleopDrive();
+
+        turretCommand = new TurretCommand(shooterSub, follower);
 
     }
 

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tele;
 
+import static java.lang.Math.PI;
+
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -31,6 +33,9 @@ public class SingleDriver extends CommandOpMode {
         telemetry.addData("Intake State",   robot.intakeSub.getCurrentState());
         telemetry.addData("Shooter State",   robot.shooterSub.getCurrentState());
         telemetry.addData("ShooterRPM",   robot.shooterSub.getShooterVelocity());
+        telemetry.addData("RobotHeading", (robot.follower.getHeading()*(180/PI)));
+        telemetry.addData("TurretHeading", robot.shooterSub.getTurretAngle());
+        telemetry.addData("Turret and Robot Heading Delta", ((robot.follower.getHeading() *(180/PI)) - (robot.shooterSub.getTurretAngle())));
         telemetry.update();
     }
 }

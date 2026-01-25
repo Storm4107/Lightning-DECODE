@@ -15,6 +15,8 @@ public class ShooterSub extends SubsystemBase {
     private final Servo door;
     private final Servo hood;
 
+    public final double turretDegreeConversion = 10.5;
+
     public enum ShooterState {
         IDLE,
         OPEN,
@@ -31,6 +33,8 @@ public class ShooterSub extends SubsystemBase {
 
     private double shooterTargetVelocity = 0;
 
+    private double turretTargetPos = 0;
+
     public ShooterSub(HardwareMap hMap) {
 
         leftShooter = hMap.get(DcMotorEx.class,"leftShooter");
@@ -44,10 +48,11 @@ public class ShooterSub extends SubsystemBase {
         leftShooter.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         rightShooter.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
+        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         shooterPIDF.setTolerance(50); // velocity tolerance
-        turretPIDF.setTolerance(13);  //4,735 this many ticks per full revolution of the turret. the tolerance now will be set to 1 degree
+        turretPIDF.setTolerance(turretDegreeConversion*5); //= 5 degrees
     }
 
     public void setState(ShooterState newState) {
@@ -78,13 +83,19 @@ public class ShooterSub extends SubsystemBase {
         return shooterPIDF.atSetPoint();
     }
 
+    public double getTurretAngle(){
+        return (turret.getCurrentPosition() / turretDegreeConversion);
+    }
+
+
+
     @Override
     public void periodic() {
 
         double velocity = leftShooter.getVelocity();
-        double power = shooterPIDF.calculate(velocity);
+        double shooterPower = shooterPIDF.calculate(velocity);
 
-        power = Math.max(-1.0, Math.min(1.0, power));
+        shooterPower = Math.max(-1.0, Math.min(1.0, shooterPower));
 
         switch (currentState) {
             case IDLE:
