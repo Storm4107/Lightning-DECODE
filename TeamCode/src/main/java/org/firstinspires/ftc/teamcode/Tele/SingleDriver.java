@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.Tele;
 
-import static java.lang.Math.PI;
 
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
+import com.seattlesolvers.solverslib.command.CommandScheduler;
+
+import org.firstinspires.ftc.teamcode.Commands.TurretCommand;
 import org.firstinspires.ftc.teamcode.RobotContainer;
 
 @TeleOp(name = "single")
@@ -18,6 +20,10 @@ public class SingleDriver extends CommandOpMode {
 
         robot.follower.setPose( new Pose(0,0,0));
 
+        robot.shooterSub.setDefaultCommand(
+                new TurretCommand(robot.shooterSub, robot.follower)
+        );
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -30,12 +36,13 @@ public class SingleDriver extends CommandOpMode {
 
         robot.follower.update();
 
-        telemetry.addData("Intake State",   robot.intakeSub.getCurrentState());
-        telemetry.addData("Shooter State",   robot.shooterSub.getCurrentState());
-        telemetry.addData("ShooterRPM",   robot.shooterSub.getShooterVelocity());
-        telemetry.addData("RobotHeading", (robot.follower.getHeading()*(180/PI)));
-        telemetry.addData("TurretHeading", robot.shooterSub.getTurretAngle());
-        telemetry.addData("Turret and Robot Heading Delta", ((robot.follower.getHeading() *(180/PI)) - (robot.shooterSub.getTurretAngle())));
+        // Runs default commands automatically
+        CommandScheduler.getInstance().run();
+
+        telemetry.addData("Robot Heading",
+                Math.toDegrees(robot.follower.getPose().getHeading()));
+        telemetry.addData("Turret Angle",
+                robot.shooterSub.getTurretAngleDegrees());
         telemetry.update();
     }
 }

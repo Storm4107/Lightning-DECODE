@@ -1,117 +1,73 @@
 package org.firstinspires.ftc.teamcode.Subsytems;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.controller.PIDFController;
 
 public class ShooterSub extends SubsystemBase {
 
-    private final DcMotorEx leftShooter, rightShooter;
     private final DcMotorEx turret;
-    private final Servo door;
-    private final Servo hood;
 
-    public final double turretDegreeConversion = 10.5;
+    private static final double TICKS_PER_DEGREE = 5.5; // adjust to your turret
+    private static final double MAX_ANGLE = 90;
+    private static final double MIN_ANGLE = -90;
 
-    public enum ShooterState {
-        IDLE,
-        OPEN,
-        CLOSE
-    }
+    // PID
+    private final PIDFController turretPID =
+            new PIDFController(0.001, 0.0, 0.000, 0.0);
 
-    private ShooterState currentState = ShooterState.IDLE;
-
-    private final PIDFController shooterPIDF =
-            new PIDFController(0.019, 0.0000, 0.0000, 0);
-
-    private final PIDFController turretPIDF =
-            new PIDFController(0,0,0,0);
-
-    private double shooterTargetVelocity = 0;
-
-    private double turretTargetPos = 0;
+    private double turretTargetTicks = 0;
 
     public ShooterSub(HardwareMap hMap) {
 
-        leftShooter = hMap.get(DcMotorEx.class,"leftShooter");
-        rightShooter = hMap.get(DcMotorEx.class,"rightShooter");
-        turret = hMap.get(DcMotorEx.class,"turret");
-        door = hMap.get(Servo.class,"door");
-        hood = hMap.get(Servo.class,"hood");
-
-        rightShooter.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        leftShooter.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        rightShooter.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        turret = hMap.get(DcMotorEx.class, "turret");
 
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        shooterPIDF.setTolerance(50); // velocity tolerance
-        turretPIDF.setTolerance(turretDegreeConversion*5); //= 5 degrees
+        turretPID.setTolerance(TICKS_PER_DEGREE * 1.5);
     }
 
-    public void setState(ShooterState newState) {
-        if (newState != currentState) {
-            shooterPIDF.reset();
-        }
+    public void setTurretTargetAngle(double angleDegrees) {
 
-        currentState = newState;
+        // Normalize to [-180, 180]
+        angleDegrees = normalizeDegrees(angleDegrees);
 
-        switch (newState) {
-            case IDLE:
-                shooterTargetVelocity = 0;
-                break;
-        }
+        // Clamp to mechanical limits
+        angleDegrees = Math.max(MIN_ANGLE,
+                Math.min(MAX_ANGLE, angleDegrees));
 
-        shooterPIDF.setSetPoint(shooterTargetVelocity);
+        turretTargetTicks = angleDegrees * TICKS_PER_DEGREE;
+
+        turretPID.setSetPoint(turretTargetTicks);
     }
 
-    public ShooterState getCurrentState() {
-        return currentState;
+    public double getTurretAngleDegrees() {
+        return turret.getCurrentPosition() / TICKS_PER_DEGREE;
     }
-
-    public double getShooterVelocity() {
-        return leftShooter.getVelocity();
-    }
-
-    public boolean atSpeed() {
-        return shooterPIDF.atSetPoint();
-    }
-
-    public double getTurretAngle(){
-        return (turret.getCurrentPosition() / turretDegreeConversion);
-    }
-
-
 
     @Override
     public void periodic() {
 
-        double velocity = leftShooter.getVelocity();
-        double shooterPower = shooterPIDF.calculate(velocity);
+        double currentTicks = turret.getCurrentPosition();
 
-        shooterPower = Math.max(-1.0, Math.min(1.0, shooterPower));
+        double power = turretPID.calculate(currentTicks);
 
-        switch (currentState) {
-            case IDLE:
-                leftShooter.setPower(0);
-                rightShooter.setPower(0);
-                door.setPosition(1);
-                hood.setPosition(0);
-                break;
+        // Clamp power
+        power = Math.max(-1.0, Math.min(1.0, power));
 
-            case OPEN:
-                door.setPosition(0);
-                break;
+        turret.setPower(power);
+    }
 
-            case CLOSE:
-                door.setPosition(1);
-                break;
-        }
+
+    private double normalizeDegrees(double angle) {
+        return Math.toDegrees(
+                Math.atan2(
+                        Math.sin(Math.toRadians(angle)),
+                        Math.cos(Math.toRadians(angle))
+                )
+        );
     }
 }

@@ -20,8 +20,6 @@ public class RobotContainer {
     public final IntakeSub intakeSub;
     public final ShooterSub shooterSub;
 
-    public final TurretCommand turretCommand;
-
     public final Follower follower ;
     public Telemetry telemetry;
 
@@ -40,7 +38,8 @@ public class RobotContainer {
         configureSingleBindings();
         follower.startTeleopDrive();
 
-        turretCommand = new TurretCommand(shooterSub, follower);
+        TurretCommand turretCommand =
+                new TurretCommand(shooterSub, follower);
 
     }
 

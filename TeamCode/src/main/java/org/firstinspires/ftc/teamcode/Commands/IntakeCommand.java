@@ -26,16 +26,16 @@ public class IntakeCommand extends CommandBase {
 
         if (intaking) {
             intake.setState(IntakeSub.intakeStates.INTAKE);
-            shooter.setState(ShooterSub.ShooterState.CLOSE);
+            //shooter.setState(ShooterSub.ShooterState.CLOSE);
         } else {
             intake.setState(IntakeSub.intakeStates.REVERSE);
-            shooter.setState(ShooterSub.ShooterState.OPEN);
+            //shooter.setState(ShooterSub.ShooterState.OPEN);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         intake.setState(IntakeSub.intakeStates.IDLE);
-        shooter.setState(ShooterSub.ShooterState.CLOSE);
+        //shooter.setState(ShooterSub.ShooterState.CLOSE);
     }
 }
