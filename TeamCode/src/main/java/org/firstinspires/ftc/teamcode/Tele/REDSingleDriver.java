@@ -9,8 +9,8 @@ import com.seattlesolvers.solverslib.command.CommandScheduler;
 import org.firstinspires.ftc.teamcode.Commands.TurretCommand;
 import org.firstinspires.ftc.teamcode.RobotContainer;
 
-@TeleOp(name = "single")
-public class SingleDriver extends CommandOpMode {
+@TeleOp(name = "REDsingle")
+public class REDSingleDriver extends CommandOpMode {
 
     private RobotContainer robot;
 
@@ -18,10 +18,12 @@ public class SingleDriver extends CommandOpMode {
     public void initialize() {
         robot = new RobotContainer(hardwareMap, gamepad1);
 
-        robot.follower.setPose( new Pose(0,0,0));
+        robot.follower.startTeleopDrive();
+
+        robot.follower.setPose( new Pose(72,72,90));
 
         robot.shooterSub.setDefaultCommand(
-                new TurretCommand(robot.shooterSub, robot.follower)
+                new TurretCommand(robot.shooterSub, robot.follower, true)
         );
 
         telemetry.addData("Status", "Initialized");

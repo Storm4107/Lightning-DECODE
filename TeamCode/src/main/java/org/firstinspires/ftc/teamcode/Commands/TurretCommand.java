@@ -11,42 +11,77 @@ public class TurretCommand extends CommandBase {
     private final Follower follower;
 
     // Replace with your real target coordinates
-    private static final double TARGET_X = 144;
-    private static final double TARGET_Y = 36;
+    private static final double BLUE_TARGET_X = 21; //this is tuned using a cartesian cordinate plane   22 this went to far right
+    private static final double BLUE_TARGET_Y = 144;  // NOT PEDRO PLANE    144
+    private static final double RED_TARGET_X = 0;    // IT IS THE STANDARD CARTSIAN CORDS
+    private static final double RED_TARGET_Y = 0;
 
-    public TurretCommand(ShooterSub shooter, Follower follower) {
+    private boolean RED;
+
+    public TurretCommand(ShooterSub shooter, Follower follower, boolean RED) {
         this.shooter = shooter;
         this.follower = follower;
+        this.RED = RED;
         addRequirements(shooter);
     }
 
     @Override
     public void execute() {
 
-        Pose pose = follower.getPose();
+        if (RED = true){
+            Pose pose = follower.getPose();
 
-        double robotX = pose.getX();
-        double robotY = pose.getY();
-        double robotHeading = pose.getHeading(); // radians
+            double robotX = pose.getX();
+            double robotY = pose.getY();
+            double robotHeading = pose.getHeading(); // radians
 
-        // Field angle to target
-        double targetFieldAngle = Math.atan2(
-                TARGET_Y - robotY,
-                TARGET_X - robotX
-        );
+            // Field angle to target
+            double targetFieldAngle = Math.atan2(
+                    robotY - BLUE_TARGET_Y,
+                    robotX - BLUE_TARGET_X
+            );
 
-        // Convert to robot-relative
-        double turretAngleRad = targetFieldAngle - robotHeading;
+            // Convert to robot-relative
+            double turretAngleRad = targetFieldAngle - robotHeading;
 
-        // Normalize to shortest path
-        turretAngleRad = Math.atan2(
-                Math.sin(turretAngleRad),
-                Math.cos(turretAngleRad)
-        );
+            // Normalize to shortest path
+            turretAngleRad = Math.atan2(
+                    Math.sin(turretAngleRad),
+                    Math.cos(turretAngleRad)
+            );
 
-        double turretAngleDeg = Math.toDegrees(turretAngleRad);
+            double turretAngleDeg = Math.toDegrees(turretAngleRad);
 
-        shooter.setTurretTargetAngle(turretAngleDeg);
+            shooter.setTurretTargetAngle(turretAngleDeg);
+        }
+        else if (RED != true) {
+            Pose pose = follower.getPose();
+
+            double robotX = pose.getX();
+            double robotY = pose.getY();
+            double robotHeading = pose.getHeading(); // radians
+
+            // Field angle to target
+            double targetFieldAngle = Math.atan2(
+                    robotY - RED_TARGET_Y,
+                    robotX - RED_TARGET_Y
+            );
+
+            // Convert to robot-relative
+            double turretAngleRad = targetFieldAngle - robotHeading;
+
+            // Normalize to shortest path
+            turretAngleRad = Math.atan2(
+                    Math.sin(turretAngleRad),
+                    Math.cos(turretAngleRad)
+            );
+
+            double turretAngleDeg = Math.toDegrees(turretAngleRad);
+
+            shooter.setTurretTargetAngle(turretAngleDeg);
+        }
+
+
     }
 
     @Override
