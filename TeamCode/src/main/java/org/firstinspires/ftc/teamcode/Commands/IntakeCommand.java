@@ -3,20 +3,19 @@ package org.firstinspires.ftc.teamcode.Commands;
 import com.seattlesolvers.solverslib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Subsytems.IntakeSub;
-import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub;
-
+import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub.FlywheelSub;
 
 public class IntakeCommand extends CommandBase {
 
     private final IntakeSub intake;
-    private final ShooterSub shooter;
+    private final FlywheelSub flywheelSub;
 
     private final boolean intaking;
 
 
-    public IntakeCommand(IntakeSub intakeSub, boolean intaking, ShooterSub shooterSub){
+    public IntakeCommand(IntakeSub intakeSub, FlywheelSub flywheelSub, boolean intaking){
         intake = intakeSub;
-        shooter = shooterSub;
+        this.flywheelSub = flywheelSub;
         this.intaking = intaking;
         addRequirements(intake);
     }
@@ -26,16 +25,15 @@ public class IntakeCommand extends CommandBase {
 
         if (intaking) {
             intake.setState(IntakeSub.intakeStates.INTAKE);
-            //shooter.setState(ShooterSub.ShooterState.CLOSE);
+            flywheelSub.setDoorClose();
         } else {
             intake.setState(IntakeSub.intakeStates.REVERSE);
-            //shooter.setState(ShooterSub.ShooterState.OPEN);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         intake.setState(IntakeSub.intakeStates.IDLE);
-        //shooter.setState(ShooterSub.ShooterState.CLOSE);
+        flywheelSub.setDoorClose();
     }
 }

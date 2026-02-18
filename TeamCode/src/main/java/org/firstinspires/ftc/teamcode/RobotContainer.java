@@ -11,7 +11,8 @@ import org.firstinspires.ftc.teamcode.Commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.Commands.ShootCommand;
 import org.firstinspires.ftc.teamcode.Commands.TurretCommand;
 import org.firstinspires.ftc.teamcode.Subsytems.IntakeSub;
-import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub;
+import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub.FlywheelSub;
+import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub.TurretSub;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class RobotContainer {
@@ -19,8 +20,8 @@ public class RobotContainer {
     public GamepadEx driver;
 
     public final IntakeSub intakeSub;
-    public final ShooterSub shooterSub;
-
+    public final TurretSub turretSub;
+    public final FlywheelSub flywheelSub;
     public final Follower follower ;
     public Telemetry telemetry;
 
@@ -31,16 +32,11 @@ public class RobotContainer {
         telemetry = null;
 
         intakeSub = new IntakeSub(hardwareMap);
-        shooterSub = new ShooterSub(hardwareMap);
-
-
+        turretSub = new TurretSub(hardwareMap);
+        flywheelSub = new FlywheelSub(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
 
         configureSingleBindings();
-
-        ShootCommand shooterCommand =
-                new ShootCommand(shooterSub, follower, false);
-
     }
 
 
@@ -49,8 +45,8 @@ public class RobotContainer {
         this.telemetry = telemetry;
 
         intakeSub = new IntakeSub(hardwareMap);
-        shooterSub = new ShooterSub(hardwareMap);
-
+        turretSub = new TurretSub(hardwareMap);
+        flywheelSub = new FlywheelSub(hardwareMap);
         follower = Constants.createFollower(hardwareMap);
     }
 
@@ -60,19 +56,14 @@ public class RobotContainer {
 
         if (telemetry != null)
             telemetry.addData("path", follower.getCurrentPath());
-
-        shooterSub.periodic();
     }
 
     public void configureSingleBindings(){
         if (driver == null) return;
 
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whileHeld(new IntakeCommand(intakeSub, true, shooterSub));
+                .whileHeld(new IntakeCommand(intakeSub, true));
         driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whileHeld(new IntakeCommand(intakeSub, false, shooterSub));
-
-        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whileHeld(new ShootCommand(shooterSub, follower, true));
+                .whileHeld(new IntakeCommand(intakeSub, false));
     }
 }

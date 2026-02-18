@@ -22,8 +22,8 @@ public class REDSingleDriver extends CommandOpMode {
 
         robot.follower.setPose( new Pose(72,72,90));
 
-        robot.shooterSub.setDefaultCommand(
-                new TurretCommand(robot.shooterSub, robot.follower, true)
+        robot.turretSub.setDefaultCommand(
+                new TurretCommand(robot.turretSub, robot.follower, true)
         );
 
         telemetry.addData("Status", "Initialized");
@@ -44,7 +44,7 @@ public class REDSingleDriver extends CommandOpMode {
         telemetry.addData("Robot Heading",
                 Math.toDegrees(robot.follower.getPose().getHeading()));
         telemetry.addData("Turret Angle",
-                robot.shooterSub.getTurretAngleDegrees());
+                robot.turretSub.getTurretAngleDegrees());
         telemetry.update();
     }
 }

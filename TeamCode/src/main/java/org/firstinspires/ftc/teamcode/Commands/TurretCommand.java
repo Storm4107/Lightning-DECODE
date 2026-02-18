@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.Commands;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.seattlesolvers.solverslib.command.CommandBase;
-import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub;
+import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub.FlywheelSub;
+import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub.TurretSub;
 
 public class TurretCommand extends CommandBase {
 
-    private final ShooterSub shooter;
+    private final TurretSub turret;
     private final Follower follower;
 
     // Replace with your real target coordinates
@@ -18,11 +19,11 @@ public class TurretCommand extends CommandBase {
 
     private boolean RED;
 
-    public TurretCommand(ShooterSub shooter, Follower follower, boolean RED) {
-        this.shooter = shooter;
+    public TurretCommand(TurretSub turret, Follower follower, boolean RED) {
+        this.turret = turret;
         this.follower = follower;
         this.RED = RED;
-        addRequirements(shooter);
+        addRequirements(turret);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class TurretCommand extends CommandBase {
 
             double turretAngleDeg = Math.toDegrees(turretAngleRad);
 
-            shooter.setTurretTargetAngle(turretAngleDeg);
+            turret.setTurretTargetAngle(turretAngleDeg);
         }
         else if (RED != true) {
             Pose pose = follower.getPose();
@@ -64,7 +65,7 @@ public class TurretCommand extends CommandBase {
             // Field angle to target
             double targetFieldAngle = Math.atan2(
                     robotY - RED_TARGET_Y,
-                    robotX - RED_TARGET_Y
+                    robotX - RED_TARGET_X
             );
 
             // Convert to robot-relative
@@ -78,7 +79,7 @@ public class TurretCommand extends CommandBase {
 
             double turretAngleDeg = Math.toDegrees(turretAngleRad);
 
-            shooter.setTurretTargetAngle(turretAngleDeg);
+            turret.setTurretTargetAngle(turretAngleDeg);
         }
 
 
