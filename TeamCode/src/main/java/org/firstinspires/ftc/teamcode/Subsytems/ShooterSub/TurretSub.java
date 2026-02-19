@@ -12,7 +12,7 @@ public class TurretSub extends SubsystemBase {
 
     private final DcMotorEx turret;
 
-    private static final double TICKS_PER_DEGREE = 6; // adjust to turret
+    private static final double TICKS_PER_DEGREE = 5.5; // adjust to turret
     private static final double MAX_ANGLE = 180;
     private static final double MIN_ANGLE = -90;
 
@@ -30,7 +30,7 @@ public class TurretSub extends SubsystemBase {
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        turretPID.setTolerance(TICKS_PER_DEGREE * 1);
+        turretPID.setTolerance(TICKS_PER_DEGREE * 0.25);
         turret.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 

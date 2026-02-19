@@ -32,6 +32,9 @@ public class ShootCommand extends CommandBase {
     @Override
     public void execute() {
 
+        flywheelSub.setDoorOpen();
+        flywheelSub.setHoodUp();
+
         if (RED){
             Pose pose = follower.getPose();
 
@@ -46,7 +49,7 @@ public class ShootCommand extends CommandBase {
 
             flywheelSub.setShoterVelocity(distanceToTarget);
 
-            if (flywheelSub.atSpeed()) {
+            /*if (flywheelSub.atSpeed()) {
                 intakeSub.setState(IntakeSub.intakeStates.RAPIDFIRE);
                 flywheelSub.setDoorOpen();
             }
@@ -55,7 +58,7 @@ public class ShootCommand extends CommandBase {
                 intakeSub.setState(IntakeSub.intakeStates.IDLE);
                 //flywheelSub.setDoorClose();        May want the intake to the heavy lifting to
                                                     // limit the ball flow during this period
-            }
+            }*/
         }
 
 
@@ -71,23 +74,23 @@ public class ShootCommand extends CommandBase {
 
             flywheelSub.setShoterVelocity((distanceToTarget));
 
-            if (flywheelSub.atSpeed()) {
+            /*if (flywheelSub.atSpeed()) {
                 intakeSub.setState(IntakeSub.intakeStates.RAPIDFIRE);
-                flywheelSub.setDoorOpen();
             }
 
             else if (!flywheelSub.atSpeed()) {
                 intakeSub.setState(IntakeSub.intakeStates.IDLE);
                 //flywheelSub.setDoorClose();
-            }
+            }*/
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         intakeSub.setState(IntakeSub.intakeStates.IDLE);
-        flywheelSub.setDoorClose();
-        flywheelSub.setShoterVelocity(Math.abs((flywheelSub.getShoterVelocity()) - 712));
+        //flywheelSub.setDoorClose();
+        //flywheelSub.setShoterVelocity(750);
+        //flywheelSub.setShoterVelocity(Math.abs((flywheelSub.getShoterVelocity()) - 712));
         //712 is the lowest speed the shooter can possibly go based on this formula 0.0213x^2−6.07x+712
         // this value can never dip into the negatives but it uses the Math.abs just in case
     }

@@ -38,7 +38,7 @@ public class FlywheelSub extends SubsystemBase {
 
     public void setShoterVelocity(double distance) {
 
-        shooterTargetVelocity = (Math.pow(distance, 2) * .0213) + (6.07 * distance) + 712; // 0.26x^2−1.25x+1500
+        shooterTargetVelocity = (Math.pow(distance, 2) * .0213) + (6.07 * distance) + 800; // 0.26x^2−1.25x+1500
 
         flywheelPIDF.setSetPoint(shooterTargetVelocity);
     }
@@ -53,6 +53,10 @@ public class FlywheelSub extends SubsystemBase {
 
     public void setDoorClose() {
         door.setPosition(1);
+    }
+
+    public void setHoodUp() {
+        hood.setPosition(1);
     }
 
     public boolean atSpeed() {

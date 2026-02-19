@@ -62,8 +62,8 @@ public class RobotContainer {
         if (driver == null) return;
 
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whileHeld(new IntakeCommand(intakeSub, true));
+                .whileHeld(new IntakeCommand(intakeSub, flywheelSub, true, true));
         driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whileHeld(new IntakeCommand(intakeSub, false));
+                .whileHeld(new IntakeCommand(intakeSub, flywheelSub, false, true));
     }
 }

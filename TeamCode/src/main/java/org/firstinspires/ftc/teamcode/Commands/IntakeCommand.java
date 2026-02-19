@@ -11,12 +11,14 @@ public class IntakeCommand extends CommandBase {
     private final FlywheelSub flywheelSub;
 
     private final boolean intaking;
+    private final boolean close;
 
 
-    public IntakeCommand(IntakeSub intakeSub, FlywheelSub flywheelSub, boolean intaking){
+    public IntakeCommand(IntakeSub intakeSub, FlywheelSub flywheelSub, boolean intaking, boolean close){
         intake = intakeSub;
         this.flywheelSub = flywheelSub;
         this.intaking = intaking;
+        this.close = close;
         addRequirements(intake);
     }
 
@@ -28,6 +30,14 @@ public class IntakeCommand extends CommandBase {
             flywheelSub.setDoorClose();
         } else {
             intake.setState(IntakeSub.intakeStates.REVERSE);
+        }
+
+        if (close) {
+            intake.setState(IntakeSub.intakeStates.INTAKE);
+            flywheelSub.setDoorClose();
+        } else {
+            intake.setState(IntakeSub.intakeStates.INTAKE);
+            flywheelSub.setDoorOpen();
         }
     }
 
