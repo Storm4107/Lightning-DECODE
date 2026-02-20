@@ -17,7 +17,7 @@ public class FlywheelSub extends SubsystemBase {
     // PID
 
     private final PIDFController flywheelPIDF =
-            new PIDFController(0.019, 0.0000, 0.0000, 0);
+            new PIDFController(0.02, 0.0000, 0.0000, 0);
 
     private double shooterTargetVelocity = 0;
 
@@ -38,7 +38,7 @@ public class FlywheelSub extends SubsystemBase {
 
     public void setShoterVelocity(double distance) {
 
-        shooterTargetVelocity = (Math.pow(distance, 2) * .0213) + (6.07 * distance) + 800; // 0.26x^2−1.25x+1500
+        shooterTargetVelocity = (Math.pow(distance, 2) * .0213) + (6.07 * distance) + 810; // 0.26x^2−1.25x+1500
 
         flywheelPIDF.setSetPoint(shooterTargetVelocity);
     }
