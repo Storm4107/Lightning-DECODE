@@ -12,10 +12,10 @@ public class TurretCommand extends CommandBase {
     private final Follower follower;
 
     // Replace with your real target coordinates
-    private static final double BLUE_TARGET_X = 21;
+    private static final double BLUE_TARGET_X = 20;
     private static final double BLUE_TARGET_Y = 144;
-    private static final double RED_TARGET_X = 144;
-    private static final double RED_TARGET_Y = 144;
+    private static final double RED_TARGET_X = 140;
+    private static final double RED_TARGET_Y = 145;
 
     private boolean RED;
 
@@ -29,7 +29,7 @@ public class TurretCommand extends CommandBase {
     @Override
     public void execute() {
 
-        if (RED = true){
+        if (RED){
             Pose pose = follower.getPose();
 
             double robotX = pose.getX();
@@ -54,8 +54,7 @@ public class TurretCommand extends CommandBase {
             double turretAngleDeg = Math.toDegrees(turretAngleRad);
 
             turret.setTurretTargetAngle(turretAngleDeg);
-        }
-        else if (RED != true) {
+        } else {
             Pose pose = follower.getPose();
 
             double robotX = pose.getX();

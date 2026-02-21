@@ -22,7 +22,7 @@ public class REDSingleDriver extends CommandOpMode {
 
         robot.follower.startTeleopDrive();
 
-        robot.follower.setPose( new Pose(120.12182741116752,125.96954314720813,-135));
+        robot.follower.setPose( new Pose(105, 92, Math.toRadians(-180)));
 
         robot.turretSub.setDefaultCommand(
                 new TurretCommand(robot.turretSub, robot.follower, true)

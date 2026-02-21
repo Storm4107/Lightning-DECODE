@@ -14,10 +14,10 @@ public class ShootCommand extends CommandBase {
     private final Follower follower;
 
     // Replace with your real target coordinates
-    private static final double BLUE_TARGET_X = 21;
+    private static final double BLUE_TARGET_X = 20;
     private static final double BLUE_TARGET_Y = 144;
-    private static final double RED_TARGET_X = 144;
-    private static final double RED_TARGET_Y = 144;
+    private static final double RED_TARGET_X = 140;
+    private static final double RED_TARGET_Y = 145;
 
     private final boolean RED;
 

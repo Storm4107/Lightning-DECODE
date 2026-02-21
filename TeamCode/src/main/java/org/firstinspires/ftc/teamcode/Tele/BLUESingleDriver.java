@@ -22,7 +22,7 @@ public class BLUESingleDriver extends CommandOpMode {
 
         robot.follower.startTeleopDrive();
 
-        robot.follower.setPose( new Pose(30,138,-90));
+        robot.follower.setPose( new Pose(86.21319796954313,75.2284263959391, Math.toRadians(-45)));
 
         robot.turretSub.setDefaultCommand(
                 new TurretCommand(robot.turretSub, robot.follower, false)

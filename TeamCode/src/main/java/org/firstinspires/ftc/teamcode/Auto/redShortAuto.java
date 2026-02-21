@@ -34,7 +34,7 @@ public class redShortAuto extends CommandOpMode {
                 new RunCommand(robot::Periodic),
                 new SequentialCommandGroup(
                         new HoodCommand( robot.flywheelSub).withTimeout(1000),
-                        new FollowPathCommand( robot.follower, redShort.shootPreload(), true, .5)
+                        new FollowPathCommand( robot.follower, redShort.shootPreload(), true, .5).setGlobalMaxPower(.5)
                                 .alongWith( new ShootCommand(robot.flywheelSub, robot.follower, robot.intakeSub, true)).withTimeout(1500),
                                 ( new ShootCommand( robot.flywheelSub, robot.follower, robot.intakeSub, true))
                                         .alongWith(new TurretCommand(robot.turretSub, robot.follower, true))
@@ -46,14 +46,16 @@ public class redShortAuto extends CommandOpMode {
                         new IntakeCommand( robot.intakeSub, robot.flywheelSub, true, false)
                                 .alongWith( new TurretCommand( robot.turretSub, robot.follower, true))
                                 .alongWith( new ShootCommand( robot.flywheelSub, robot.follower, robot.intakeSub, true)).withTimeout(2000),
-                        new FollowPathCommand( robot.follower, redShort.pickupFront1(), true, .5),
+                        new FollowPathCommand( robot.follower, redShort.pickupFront1(), true),
                         new IntakeCommand( robot.intakeSub, robot.flywheelSub, true, true)
-                                .alongWith( new FollowPathCommand( robot.follower, redShort.pickupFront())).withTimeout(2700),
+                                .alongWith( new FollowPathCommand( robot.follower, redShort.pickupFront())).withTimeout(2000),
                         new ShootCommand( robot.flywheelSub, robot.follower, robot.intakeSub, true)
-                                .alongWith( new FollowPathCommand( robot.follower, redShort.shootFront())).withTimeout(2500),
+                                .alongWith( new FollowPathCommand( robot.follower, redShort.shootFront())).withTimeout(2000),
+                        new WaitCommand(500),
                         new ShootCommand( robot.flywheelSub, robot.follower, robot.intakeSub, true)
-                                .alongWith(new TurretCommand(robot.turretSub, robot.follower, true))
-                                .alongWith(new IntakeCommand(robot.intakeSub, robot.flywheelSub, true, false)).withTimeout(2500)
+                                .alongWith( new TurretCommand( robot.turretSub, robot.follower, true))
+                                .alongWith( new IntakeCommand( robot.intakeSub, robot.flywheelSub, true, false)).withTimeout(2500),
+                        new FollowPathCommand( robot.follower, redShort.leave(), true)
                 )
         );
     }

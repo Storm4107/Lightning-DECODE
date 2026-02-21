@@ -18,7 +18,7 @@ public class TurretSub extends SubsystemBase {
 
     // PID
     private final PIDFController turretPID =
-            new PIDFController(0.01, 0.0, 0.000, 0.0);
+            new PIDFController(0.01, 0.0, 0.0003, 0.0);
 
 
     private double turretTargetTicks = 0;

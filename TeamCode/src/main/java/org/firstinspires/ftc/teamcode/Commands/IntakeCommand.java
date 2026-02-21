@@ -25,18 +25,18 @@ public class IntakeCommand extends CommandBase {
     @Override
     public void execute(){
 
-        if (intaking) {
+        if (intaking && close) {
             intake.setState(IntakeSub.intakeStates.INTAKE);
             flywheelSub.setDoorClose();
-        } else {
-            intake.setState(IntakeSub.intakeStates.REVERSE);
         }
 
-        if (close) {
+        if (intaking && !close) {
             intake.setState(IntakeSub.intakeStates.INTAKE);
-            flywheelSub.setDoorClose();
-        } else {
-            intake.setState(IntakeSub.intakeStates.INTAKE);
+            flywheelSub.setDoorOpen();
+        }
+
+        if (!intaking && !close) {
+            intake.setState(IntakeSub.intakeStates.REVERSE);
             flywheelSub.setDoorOpen();
         }
     }
