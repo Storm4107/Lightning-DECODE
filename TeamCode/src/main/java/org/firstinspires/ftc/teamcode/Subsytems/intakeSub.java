@@ -3,10 +3,9 @@ package org.firstinspires.ftc.teamcode.Subsytems;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
-public class IntakeSub extends SubsystemBase {
+public class intakeSub extends SubsystemBase {
 
     private final DcMotorEx intake; // plugged into Expansion Hub Port (1)
 
@@ -16,7 +15,7 @@ public class IntakeSub extends SubsystemBase {
     private intakeStates currentState = intakeStates.IDLE;
 
     //Constructor
-    public IntakeSub(final HardwareMap hMap) {
+    public intakeSub(final HardwareMap hMap) {
         intake = hMap.get(DcMotorEx.class, "intake");
 
         intake.setDirection(DcMotorSimple.Direction.REVERSE);

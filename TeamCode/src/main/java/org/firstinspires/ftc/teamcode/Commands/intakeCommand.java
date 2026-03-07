@@ -2,23 +2,17 @@ package org.firstinspires.ftc.teamcode.Commands;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsytems.IntakeSub;
-import org.firstinspires.ftc.teamcode.Subsytems.LightsSub;
-
+import org.firstinspires.ftc.teamcode.Subsytems.intakeSub;
 
 public class intakeCommand extends CommandBase {
 
-    private final IntakeSub intake;
+    private final intakeSub intake;
 
     private final boolean intaking;
 
-    private final LightsSub light;
-
-
-    public intakeCommand(IntakeSub intakeSub, boolean intaking, LightsSub lightSub){
+    public intakeCommand(intakeSub intakeSub, boolean intaking){
         intake = intakeSub;
         this.intaking = intaking;
-        light = lightSub;
         addRequirements(intake);
     }
 
@@ -26,15 +20,14 @@ public class intakeCommand extends CommandBase {
     public void execute(){
 
         if (intaking) {
-            intake.setState(IntakeSub.intakeStates.INTAKE);
+            intake.setState(intakeSub.intakeStates.INTAKE);
         } else {
-            intake.setState(IntakeSub.intakeStates.REVERSE);
+            intake.setState(intakeSub.intakeStates.REVERSE);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-        intake.setState(IntakeSub.intakeStates.IDLE);
-        light.setState(LightsSub.lightStates.IDLE);
+        intake.setState(intakeSub.intakeStates.IDLE);
     }
 }

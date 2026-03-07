@@ -4,14 +4,15 @@ import android.annotation.SuppressLint;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsytems.ShooterSub;
+import org.firstinspires.ftc.teamcode.Subsytems.shooterSub;
 
 
-public class ShootCommand extends CommandBase {
-    private final ShooterSub shooter;
+public class shootCommand extends CommandBase {
+    private final shooterSub shooter;
 
     private final boolean Long;
-    public ShootCommand(ShooterSub shooterSub, boolean Long){
+
+    public shootCommand(shooterSub shooterSub, boolean Long){
         shooter = shooterSub;
         this.Long = Long;
         addRequirements(shooter);
@@ -21,13 +22,13 @@ public class ShootCommand extends CommandBase {
     @Override
     public void execute(){
         if (Long == true) {
-            shooter.setState(ShooterSub.ShooterState.LONGSHOT);
+            shooter.setState(shooterSub.ShooterState.LONGSHOT);
         } else
-        shooter.setState(ShooterSub.ShooterState.SHORTSHOT);
+            shooter.setState(shooterSub.ShooterState.SHORTSHOT);
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooter.setState(ShooterSub.ShooterState.IDLE);
+        shooter.setState(shooterSub.ShooterState.IDLE);
     }
 }

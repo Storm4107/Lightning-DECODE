@@ -1,20 +1,22 @@
-package org.firstinspires.ftc.teamcode.Tele;
+package org.firstinspires.ftc.teamcode.tele;
 
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
-import org.firstinspires.ftc.teamcode.RobotContainer;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
-@TeleOp(name = "single")
-public class SingleDriver extends CommandOpMode {
+import org.firstinspires.ftc.teamcode.robotContainer;
 
-    private RobotContainer robot;
+@TeleOp(name = "shortRedSingle")
+public class shortRedSingle extends CommandOpMode {
+
+    private robotContainer robot;
 
     @Override
     public void initialize() {
-        robot = new RobotContainer(hardwareMap, gamepad1);
+        robot = new robotContainer(hardwareMap, gamepad1);
 
-        robot.follower.setPose( new Pose(0,0,0));
+        robot.follower.setPose( new Pose(105,92,Math.toRadians(-180)));
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -26,11 +28,14 @@ public class SingleDriver extends CommandOpMode {
 
         robot.follower.setTeleOpDrive(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, false);
 
+        if (gamepad1.startWasPressed()){
+            robot.follower.setPose( new Pose(0,0,0));
+        }
+
         robot.follower.update();
 
         telemetry.addData("Intake State",   robot.intakeSub.getCurrentState());
         telemetry.addData("Shooter State",   robot.shooterSub.getCurrentState());
-        telemetry.addData("Light State",   robot.lightSub.getCurrentState());
         telemetry.addData("ShooterRPM",   robot.shooterSub.getShooterVelocity());
         telemetry.update();
     }

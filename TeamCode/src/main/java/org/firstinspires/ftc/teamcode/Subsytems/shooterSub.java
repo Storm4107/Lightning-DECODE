@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.controller.PIDFController;
 
-public class ShooterSub extends SubsystemBase {
+public class shooterSub extends SubsystemBase {
 
     private final DcMotorEx leftShooter;
     private final DcMotorEx rightShooter;
@@ -27,7 +27,7 @@ public class ShooterSub extends SubsystemBase {
 
     private double targetVelocity = 0;
 
-    public ShooterSub(HardwareMap hMap) {
+    public shooterSub(HardwareMap hMap) {
 
         leftShooter = hMap.get(DcMotorEx.class,"leftShooter");
         rightShooter = hMap.get(DcMotorEx.class,"rightShooter");
@@ -55,11 +55,11 @@ public class ShooterSub extends SubsystemBase {
                 break;
 
             case SHORTSHOT:
-                targetVelocity = 1400;
+                targetVelocity = 1500;
                 break;
 
             case LONGSHOT:
-                targetVelocity = 2700;
+                targetVelocity = 1850;
                 break;
         }
 
