@@ -55,7 +55,7 @@ public class shooterSub extends SubsystemBase {
                 break;
 
             case SHORTSHOT:
-                targetVelocity = 1500;
+                targetVelocity = 1400;
                 break;
 
             case LONGSHOT:

@@ -8,7 +8,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathBuilder;
 import com.pedropathing.paths.PathChain;
 
-public class blueShortPath {
+public class blueLongPath {
 
     public static Pose startPose = new Pose(26, 127, Math.toRadians(315));
     public static Pose shootPose = new Pose(65, 80.9238578680203, Math.toRadians(305));
@@ -17,8 +17,8 @@ public class blueShortPath {
     public static Pose gatePose = new Pose(8, 62 , Math.toRadians(0));
     public static Pose gateControlPose = new Pose(40, 68, Math.toRadians(0));
     public static Pose frontPose1 = new Pose(50, 90.9238578680203, Math.toRadians(0));
-    public static Pose frontPose = new Pose(2, 65, Math.toRadians(0));
-    public static Pose leavePose = new Pose(8, 92, Math.toRadians(180));
+    public static Pose frontPose = new Pose(2, 98, Math.toRadians(0));
+    public static Pose leavePose = new Pose(25, 8, Math.toRadians(180));
 
     public static PathChain shootPreload() {
         return new PathBuilder(follower)
@@ -66,7 +66,7 @@ public class blueShortPath {
                                 shootPose
                         )
                 )
-                .setLinearHeadingInterpolation( gatePose.getHeading(), Math.toRadians(-45))
+                .setLinearHeadingInterpolation( gatePose.getHeading(), shootPose.getHeading())
                 .build();
     }
 
@@ -109,11 +109,11 @@ public class blueShortPath {
         return new PathBuilder(follower)
                 .addPath(
                         new BezierLine(
-                                shootPose,
+                                startPose,
                                 leavePose
                         )
                 )
-                .setLinearHeadingInterpolation( shootPose.getHeading(), leavePose.getHeading())
+                .setConstantHeadingInterpolation(startPose.getHeading())
                 .build();
     }
 }

@@ -9,13 +9,12 @@ import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.intakeCommand;
 import org.firstinspires.ftc.teamcode.Commands.shootCommand;
-import org.firstinspires.ftc.teamcode.pedroPathing.paths.blueShortPath;
-import org.firstinspires.ftc.teamcode.pedroPathing.paths.redShortPath;
+import org.firstinspires.ftc.teamcode.pedroPathing.paths.blueLongPath;
 import org.firstinspires.ftc.teamcode.robotContainer;
 
 
 @Autonomous
-public class blueShortAuto extends CommandOpMode {
+public class blueLongAuto extends CommandOpMode {
 
     robotContainer robot;
 
@@ -24,11 +23,15 @@ public class blueShortAuto extends CommandOpMode {
 
         robot = new robotContainer(hardwareMap, telemetry);
 
-        robot.follower.setPose( new Pose(26,127,Math.toRadians(315)));
+        robot.follower.setPose( new Pose(53,95,Math.toRadians(-180)));
 
         schedule(
                 new RunCommand(robot::Periodic),
                 new SequentialCommandGroup(
+
+                        new FollowPathCommand( robot.follower, blueLongPath.leave())
+
+                        /*
                         new shootCommand(robot.shooterSub, false).alongWith(
                                 new FollowPathCommand( robot.follower, blueShortPath.shootPreload()).setGlobalMaxPower(.75)).withTimeout(3000),
                         new shootCommand(robot.shooterSub, false).alongWith(
@@ -39,7 +42,7 @@ public class blueShortAuto extends CommandOpMode {
                         new FollowPathCommand(robot.follower, blueShortPath.shootMiddle()).alongWith(
                                 new shootCommand(robot.shooterSub, false)).withTimeout(3000),
                         new shootCommand(robot.shooterSub, false).alongWith(
-                                new intakeCommand(robot.intakeSub, true)).withTimeout(2000),
+                                new intakeCommand(robot.intakeSub, true)).withTimeout(2000)/*,
                         new intakeCommand(robot.intakeSub, true).alongWith(
                                 new FollowPathCommand(robot.follower, blueShortPath.pickupFront1())).withTimeout(2000),
                         new FollowPathCommand(robot.follower, blueShortPath.pickupFront()).alongWith(
@@ -48,7 +51,7 @@ public class blueShortAuto extends CommandOpMode {
                                 new shootCommand(robot.shooterSub, false)).withTimeout(3000),
                         new shootCommand(robot.shooterSub, false).alongWith(
                                 new intakeCommand(robot.intakeSub, true)).withTimeout(3000),
-                        new FollowPathCommand(robot.follower, blueShortPath.leave())
+                        new FollowPathCommand(robot.follower, blueShortPath.leave())*/
             )
         );
     }

@@ -6,12 +6,15 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.intakeCommand;
 import org.firstinspires.ftc.teamcode.Commands.shootCommand;
+import org.firstinspires.ftc.teamcode.Commands.turretCommand;
 import org.firstinspires.ftc.teamcode.Subsytems.intakeSub;
 import org.firstinspires.ftc.teamcode.Subsytems.shooterSub;
+import org.firstinspires.ftc.teamcode.Subsytems.turretSub;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class robotContainer {
@@ -20,6 +23,7 @@ public class robotContainer {
 
     public final intakeSub intakeSub;
     public final shooterSub shooterSub;
+    public final turretSub turret;
 
     public final Follower follower;
     public Telemetry telemetry;
@@ -32,6 +36,7 @@ public class robotContainer {
 
         intakeSub = new intakeSub(hardwareMap);
         shooterSub = new shooterSub(hardwareMap);
+        turret = new turretSub(hardwareMap);
 
         follower = Constants.createFollower(hardwareMap);
 
@@ -45,6 +50,8 @@ public class robotContainer {
 
         intakeSub = new intakeSub(hardwareMap);
         shooterSub = new shooterSub(hardwareMap);
+        turret = new turretSub(hardwareMap);
+
 
         follower = Constants.createFollower(hardwareMap);
 
@@ -65,6 +72,9 @@ public class robotContainer {
 
         driver.getGamepadButton(GamepadKeys.Button.Y)
                 .whileHeld(new shootCommand(shooterSub, true));
+
+        driver.getGamepadButton(GamepadKeys.Button.BACK)
+                .whileHeld(new turretCommand(turret,follower, true, true));
     }
 
     public void Periodic() {
