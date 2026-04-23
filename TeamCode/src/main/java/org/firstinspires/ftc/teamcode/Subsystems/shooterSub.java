@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsytems;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -90,7 +90,7 @@ public class shooterSub extends SubsystemBase {
             case IDLE:
                 leftShooter.setPower(0);
                 rightShooter.setPower(0);
-                door.setPosition(1);
+                door.setPosition(.35);
                 hood.setPosition(0);
                 break;
 

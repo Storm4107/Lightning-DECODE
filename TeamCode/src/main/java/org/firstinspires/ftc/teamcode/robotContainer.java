@@ -1,20 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
-import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.intakeCommand;
 import org.firstinspires.ftc.teamcode.Commands.shootCommand;
 import org.firstinspires.ftc.teamcode.Commands.turretCommand;
-import org.firstinspires.ftc.teamcode.Subsytems.intakeSub;
-import org.firstinspires.ftc.teamcode.Subsytems.shooterSub;
-import org.firstinspires.ftc.teamcode.Subsytems.turretSub;
+import org.firstinspires.ftc.teamcode.Subsystems.intakeSub;
+import org.firstinspires.ftc.teamcode.Subsystems.shooterSub;
+import org.firstinspires.ftc.teamcode.Subsystems.turretSub;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 public class robotContainer {

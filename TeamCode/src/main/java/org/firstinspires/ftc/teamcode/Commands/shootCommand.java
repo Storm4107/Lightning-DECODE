@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsytems.shooterSub;
+import org.firstinspires.ftc.teamcode.Subsystems.shooterSub;
 
 
 public class shootCommand extends CommandBase {

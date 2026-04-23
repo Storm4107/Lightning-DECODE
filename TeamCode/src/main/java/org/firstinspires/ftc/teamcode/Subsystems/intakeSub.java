@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode.Subsytems;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,6 +10,8 @@ public class intakeSub extends SubsystemBase {
 
     private final DcMotorEx intake; // plugged into Expansion Hub Port (1)
 
+    private final CRServo rightintake, leftIntake;
+
     //decelaring the Intake States
     public enum intakeStates {INTAKE, IDLE, REVERSE, RAPIDFIRE}
     // sets the current (default) state of the intake
@@ -17,8 +20,11 @@ public class intakeSub extends SubsystemBase {
     //Constructor
     public intakeSub(final HardwareMap hMap) {
         intake = hMap.get(DcMotorEx.class, "intake");
+        rightintake = hMap.get(CRServo.class, "rightIntake");
+        leftIntake = hMap.get(CRServo.class, "leftIntake");
 
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightintake.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setState(intakeStates newState) {
@@ -29,23 +35,32 @@ public class intakeSub extends SubsystemBase {
         return currentState;
     }
 
+    public void setIntakeServoSpeed(double power){
+        leftIntake.setPower(power);
+        rightintake.setPower(power);
+    }
+
     @Override
     public void periodic() {
         switch (currentState) {
             case INTAKE:
                 intake.setPower(1);
+                setIntakeServoSpeed(-1);
                 break;
 
             case REVERSE:
                 intake.setPower(-1);
+                setIntakeServoSpeed(-1);
                 break;
 
             case RAPIDFIRE:
                 intake.setPower(1);
+                setIntakeServoSpeed(1);
                 break;
 
             case IDLE:
                 intake.setPower(0);
+                setIntakeServoSpeed(0);
                 break;
         }
     }

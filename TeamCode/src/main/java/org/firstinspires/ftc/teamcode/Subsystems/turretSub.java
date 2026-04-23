@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Subsytems;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -11,9 +11,9 @@ public class turretSub extends SubsystemBase {
 
     private final DcMotorEx turret;
 
-    private static final double TICKS_PER_DEGREE = 5.5; // adjust to turret
+    private static final double TICKS_PER_DEGREE = 6.5; // adjust to turret
     private static final double MAX_ANGLE = 180;
-    private static final double MIN_ANGLE = -90;
+    private static final double MIN_ANGLE = -180;
 
     // PID
     private final PIDFController turretPID =

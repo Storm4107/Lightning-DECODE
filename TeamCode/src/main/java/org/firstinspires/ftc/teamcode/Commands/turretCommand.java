@@ -4,7 +4,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsytems.turretSub;
+import org.firstinspires.ftc.teamcode.Subsystems.turretSub;
 
 public class turretCommand extends CommandBase {
 
