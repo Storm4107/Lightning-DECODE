@@ -4,9 +4,6 @@ import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
-import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
-
-import org.firstinspires.ftc.teamcode.Commands.turretCommand;
 import org.firstinspires.ftc.teamcode.robotContainer;
 
 @TeleOp(name = "test")
@@ -17,10 +14,6 @@ public class test extends CommandOpMode {
     @Override
     public void initialize() {
         robot = new robotContainer(hardwareMap, gamepad1);
-
-        /*robot.turret.setDefaultCommand(
-                new turretCommand(robot.turret, robot.follower, true, false)
-        );*/
 
         robot.follower.setPose( new Pose(72,9,Math.toRadians(90)));
 
@@ -37,15 +30,10 @@ public class test extends CommandOpMode {
         // Runs default commands automatically
         CommandScheduler.getInstance().run();
 
-        if (gamepad1.startWasPressed()){
-            robot.follower.setPose( new Pose(0,0,0));
-        }
-
         robot.follower.update();
 
-        telemetry.addData("Intake State",   robot.intakeSub.getCurrentState());
-        telemetry.addData("Shooter State",   robot.shooterSub.getCurrentState());
-        telemetry.addData("ShooterRPM",   robot.shooterSub.getShooterVelocity());
+        telemetry.addData("TURRET_ENCODER", robot.turret.getTurretEncoder());
+
         telemetry.update();
     }
 }
