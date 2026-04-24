@@ -7,8 +7,10 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Commands.turretCommand;
 import org.firstinspires.ftc.teamcode.Subsystems.turretSub;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+import org.firstinspires.ftc.teamcode.util.targetingUtil;
 
 public class robotContainer {
 
@@ -16,6 +18,7 @@ public class robotContainer {
     public final turretSub turret;
 
     public final Follower follower;
+    public targetingUtil targetingUtil;
     public Telemetry telemetry;
 
     public robotContainer(HardwareMap hardwareMap, Gamepad driver) {
