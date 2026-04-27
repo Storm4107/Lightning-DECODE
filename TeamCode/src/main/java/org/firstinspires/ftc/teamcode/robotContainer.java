@@ -7,9 +7,12 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Commands.flywheelCommand;
+import org.firstinspires.ftc.teamcode.Commands.doorCommand;
+import org.firstinspires.ftc.teamcode.Commands.intakeCommand;
+import org.firstinspires.ftc.teamcode.Subsystems.doorSub;
 import org.firstinspires.ftc.teamcode.Subsystems.flywheelSub;
 import org.firstinspires.ftc.teamcode.Subsystems.hoodSub;
+import org.firstinspires.ftc.teamcode.Subsystems.intakeSub;
 import org.firstinspires.ftc.teamcode.Subsystems.turretSub;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.util.Alliance;
@@ -18,14 +21,17 @@ import org.firstinspires.ftc.teamcode.util.targetingUtil;
 public class robotContainer {
 
     public GamepadEx driver;
-    public final turretSub turret;
-    public  flywheelSub flywheel;
+    public turretSub turret;
+    public flywheelSub flywheel;
+    public intakeSub intake;
+    public doorSub door;
     public  hoodSub hood;
-    public final Follower follower;
+    public Follower follower;
     public targetingUtil targetingUtil;
     public Telemetry telemetry;
 
-    public robotContainer(HardwareMap hardwareMap, Gamepad driver) {
+    //this is for TElE
+    public robotContainer(HardwareMap hardwareMap, Gamepad driver, Alliance alliance) {
 
         this.driver = new GamepadEx(driver);
 
@@ -33,8 +39,9 @@ public class robotContainer {
 
         turret = new turretSub(hardwareMap);
         hood = new hoodSub(hardwareMap);
-
         flywheel = new flywheelSub(hardwareMap);
+        intake = new intakeSub(hardwareMap);
+        door = new doorSub(hardwareMap);
 
         follower = Constants.createFollower(hardwareMap);
 
@@ -42,22 +49,31 @@ public class robotContainer {
         follower.startTeleopDrive();
     }
 
+    //this is for auto
     public robotContainer(HardwareMap hardwareMap, Telemetry telemetry) {
 
-        telemetry = null;
-
         turret = new turretSub(hardwareMap);
+        hood = new hoodSub(hardwareMap);
+        flywheel = new flywheelSub(hardwareMap);
+        intake = new intakeSub(hardwareMap);
+        door = new doorSub(hardwareMap);
 
         follower = Constants.createFollower(hardwareMap);
-
-        follower.startTeleopDrive();
     }
 
     public void configureSingleBindings(){
         if (driver == null) return;
 
-        driver.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).whileHeld(
-                new flywheelCommand(flywheel, follower, ()-> Alliance.RED)
+        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whileHeld(
+                new intakeCommand(intake, door,1)
+        );
+
+        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whileHeld(
+                new doorCommand(door, false)
+        );
+
+        driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileHeld(
+                new intakeCommand(intake, door, -1)
         );
     }
 

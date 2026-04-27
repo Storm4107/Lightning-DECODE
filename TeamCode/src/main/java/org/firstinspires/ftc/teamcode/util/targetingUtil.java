@@ -5,11 +5,11 @@ import com.pedropathing.geometry.Pose;
 public class targetingUtil {
 
     public static double getX(Alliance alliance){
-        return (alliance == Alliance.RED) ? 144 : 0;
+        return (alliance == Alliance.RED) ? 140 : 0; //these used to be 144 and 0 but because of over shoot i adjusted to go down 10
     }
 
     public static double getY(){
-        return 144;
+        return 134; //these used to be 144 but because of over shoot i adjusted to go down 10
     }
 
     public static double getDistance(Pose pose, Alliance alliance){
@@ -37,7 +37,7 @@ public class targetingUtil {
         double y = getY();
 
         double xOffset = 0;
-        double yOffset = 4;
+        double yOffset = -4;
 
         double heading = pose.getHeading();
 

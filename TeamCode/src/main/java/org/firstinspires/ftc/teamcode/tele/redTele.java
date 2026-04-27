@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.robotContainer;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 import org.firstinspires.ftc.teamcode.util.targetingUtil;
 
-@TeleOp(name = "test")
-public class test extends CommandOpMode {
+@TeleOp(name = "redTele")
+public class redTele extends CommandOpMode {
 
     private robotContainer robot;
 

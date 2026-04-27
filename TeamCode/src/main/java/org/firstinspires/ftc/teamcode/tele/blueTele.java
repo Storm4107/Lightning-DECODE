@@ -13,27 +13,27 @@ import org.firstinspires.ftc.teamcode.robotContainer;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 import org.firstinspires.ftc.teamcode.util.targetingUtil;
 
-@TeleOp(name = "test")
-public class test extends CommandOpMode {
+@TeleOp(name = "blueTele")
+public class blueTele extends CommandOpMode {
 
     private robotContainer robot;
 
     @Override
     public void initialize() {
-        robot = new robotContainer(hardwareMap, gamepad1, Alliance.RED);
+        robot = new robotContainer(hardwareMap, gamepad1, Alliance.BLUE);
 
         robot.follower.setPose( new Pose(72,9,Math.toRadians(90)));
 
         robot.turret.setDefaultCommand(
-                new turretCommand(robot.turret, robot.follower, ()-> Alliance.RED)
+                new turretCommand(robot.turret, robot.follower, ()-> Alliance.BLUE)
         );
 
         robot.hood.setDefaultCommand(
-                new hoodCommand(robot.hood, robot.follower, () -> Alliance.RED)
+                new hoodCommand(robot.hood, robot.follower, () -> Alliance.BLUE)
         );
 
         robot.driver.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).whileHeld(
-                new autoShootCommand(robot.intake, robot.flywheel, robot.door, robot.follower, ()-> Alliance.RED)
+                new autoShootCommand(robot.intake, robot.flywheel, robot.door, robot.follower, ()-> Alliance.BLUE)
         );
 
         telemetry.addData("Status", "Initialized");

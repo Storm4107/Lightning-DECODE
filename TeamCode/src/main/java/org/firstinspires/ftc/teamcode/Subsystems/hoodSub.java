@@ -31,12 +31,12 @@ public class hoodSub extends SubsystemBase {
         return hood.getPosition();
     }
 
-    // 🔥 CONTINUOUS distance → hood mapping
+
     public double calculateHood(double distance){
 
-        // --- YOUR TUNABLE POINTS ---
+        // --- TUNABLE POINTS ---
         double d1 = 40.75, h1 = 0.15;   // close
-        double d2 = 70.75, h2 = 0.35;   // mid
+        double d2 = 81.68, h2 = 0.55;   // mid
         double d3 = 152, h3 = 0.75;   // far
 
         double hoodPos;

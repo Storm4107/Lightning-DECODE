@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
@@ -13,11 +13,10 @@ public class turretSub extends SubsystemBase {
 
     private final DcMotor turret;
 
-    private final PIDFController pidf = new PIDFController(0.01,0,0,0);
-    private final double TICKS_PER_DEGREE = 5.6;
-    private final double MAX_ANGLE = 180;
-    private final double MIN_ANGLE = -180;
-
+    private final PIDFController pidf = new PIDFController(0.02,0,0.0001,0);
+    private final double TICKS_PER_DEGREE = 2000.0 / 360.0;
+    private final double MAX_ANGLE = 360;
+    private final double MIN_ANGLE = -135;
     public turretSub(HardwareMap hMap) {
         turret = hMap.get(DcMotor.class, "turret");
 
@@ -26,7 +25,7 @@ public class turretSub extends SubsystemBase {
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        pidf.setTolerance(1 * TICKS_PER_DEGREE);  // this is equal to 5 degrees
+        pidf.setTolerance(.5 * TICKS_PER_DEGREE);  // this is equal to .5 degrees
 
     }
 
