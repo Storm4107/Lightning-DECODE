@@ -12,12 +12,13 @@ import org.firstinspires.ftc.teamcode.Commands.autoShootCommand;
 import org.firstinspires.ftc.teamcode.Commands.hoodCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeCommand;
 import org.firstinspires.ftc.teamcode.Commands.turretCommand;
-import org.firstinspires.ftc.teamcode.robotContainer;
+import org.firstinspires.ftc.teamcode.pedroPathing.Paths.longRed3Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.Paths.shortRed9Path;
+import org.firstinspires.ftc.teamcode.robotContainer;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 
 @Autonomous
-public class shortRed9 extends CommandOpMode {
+public class longRed9 extends CommandOpMode {
 
     robotContainer robot;
 
@@ -26,9 +27,9 @@ public class shortRed9 extends CommandOpMode {
 
         robot = new robotContainer(hardwareMap, telemetry);
 
-        robot.follower.setPose( new Pose(120.325,125.685,Math.toRadians(-135)));
+        robot.follower.setPose( new Pose(112,12,Math.toRadians(90)));
 
-        shortRed9Path paths = new shortRed9Path(robot.follower);
+        longRed3Path paths = new longRed3Path(robot.follower);
 
         robot.turret.setDefaultCommand(
                 new turretCommand(robot.turret, robot.follower, ()-> Alliance.RED)
@@ -41,17 +42,6 @@ public class shortRed9 extends CommandOpMode {
         schedule(
                 new RunCommand( robot::Periodic ),
                 new SequentialCommandGroup(
-                        new FollowPathCommand(robot.follower, paths.shootPreload,true,1),
-                        new WaitCommand(500),
-                        new autoShootCommand(robot.intake, robot.flywheel, robot.door, robot.follower, ()-> Alliance.RED).withTimeout(3000),
-                        new FollowPathCommand(robot.follower, paths.pickupRow2, true, .75)
-                                .alongWith( new intakeCommand(robot.intake, robot.door, 1)).withTimeout(3000),
-                        new FollowPathCommand(robot.follower, paths.openGate),
-                        new FollowPathCommand(robot.follower, paths.shootRow2),
-                        new autoShootCommand(robot.intake, robot.flywheel, robot.door, robot.follower, ()-> Alliance.RED).withTimeout(3000),
-                        new FollowPathCommand(robot.follower, paths.pickupRow1)
-                                .alongWith(new intakeCommand(robot.intake, robot.door, 1)).withTimeout(3000),
-                        new FollowPathCommand(robot.follower, paths.shootRow1),
                         new autoShootCommand(robot.intake, robot.flywheel, robot.door, robot.follower, ()-> Alliance.RED).withTimeout(3000),
                         new FollowPathCommand(robot.follower, paths.park)
                         )

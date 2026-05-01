@@ -21,18 +21,18 @@ public class intakeSub extends SubsystemBase {
 
         intake.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
-        leftIntake.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightIntake.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setPower(double power){
         intake.setPower(power);
-        leftIntake.setPower(power);
-        rightIntake.setPower(power);
+        //leftIntake.setPower(power);
+        //rightIntake.setPower(power);
     }
 
-    public void setReverse(double power){
+    public void setGearbox(double power){
         leftIntake.setPower(power);
         rightIntake.setPower(power);
     }

@@ -18,7 +18,7 @@ public class flywheelSub extends SubsystemBase {
     private double targetVelocity = 0;
 
     private final double[] distances = {40.75,50.00, 81.68, 112.5, 152};
-    private final double[] rpms      = {1150, 1275, 1450, 1650, 2250};
+    private final double[] rpms = {1150, 1350, 1450, 1650, 2250};
 
     public flywheelSub(HardwareMap hMap){
 
@@ -33,7 +33,7 @@ public class flywheelSub extends SubsystemBase {
         leftShooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightShooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        pidf.setTolerance(200);
+        pidf.setTolerance(150);
     }
 
     public void setVelocity(double velocity) {

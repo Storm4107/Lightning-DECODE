@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.robotContainer;
 import org.firstinspires.ftc.teamcode.util.Alliance;
 import org.firstinspires.ftc.teamcode.util.targetingUtil;
 
-@TeleOp(name = "blueTele")
-public class blueTele extends CommandOpMode {
+@TeleOp(name = "blueLongTele")
+public class blueLongTele extends CommandOpMode {
 
     private robotContainer robot;
 
@@ -22,7 +22,7 @@ public class blueTele extends CommandOpMode {
     public void initialize() {
         robot = new robotContainer(hardwareMap, gamepad1, Alliance.BLUE);
 
-        robot.follower.setPose( new Pose(72,9,Math.toRadians(90)));
+        robot.follower.setPose( new Pose(19,106,Math.toRadians(0)));
 
         robot.turret.setDefaultCommand(
                 new turretCommand(robot.turret, robot.follower, ()-> Alliance.BLUE)

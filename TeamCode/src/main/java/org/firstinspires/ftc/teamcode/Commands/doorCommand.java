@@ -24,8 +24,5 @@ public class doorCommand extends CommandBase {
         }
     }
 
-    @Override
-    public boolean isFinished(){
-        return true;
-    }
+
 }

@@ -58,10 +58,11 @@ public class autoShootCommand extends CommandBase {
         // --- FEED LOGIC (prevents early shots) ---
         if (flywheel.atSpeed()) {
             intake.setPower(1);
+            intake.setGearbox(-1);
             door.open();
         } else {
             door.close();
-            intake.setReverse(-1);
+            intake.setGearbox(1);
         }
     }
 

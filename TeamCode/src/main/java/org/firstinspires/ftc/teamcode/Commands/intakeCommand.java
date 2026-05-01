@@ -22,6 +22,7 @@ public class intakeCommand extends CommandBase {
     @Override
     public void execute(){
         intake.setPower(power);
+        intake.setGearbox(1);
 
         if (power >= 0){
             door.close();

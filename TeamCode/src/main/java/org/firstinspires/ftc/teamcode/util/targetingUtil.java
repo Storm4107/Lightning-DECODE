@@ -5,7 +5,7 @@ import com.pedropathing.geometry.Pose;
 public class targetingUtil {
 
     public static double getX(Alliance alliance){
-        return (alliance == Alliance.RED) ? 140 : 0; //these used to be 144 and 0 but because of over shoot i adjusted to go down 10
+        return (alliance == Alliance.RED) ? 139 : 5; //these used to be 144 and 0 but because of over shoot i adjusted to go down 10
     }
 
     public static double getY(){

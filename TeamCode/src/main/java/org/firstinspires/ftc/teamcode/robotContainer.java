@@ -68,10 +68,6 @@ public class robotContainer {
                 new intakeCommand(intake, door,1)
         );
 
-        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whileHeld(
-                new doorCommand(door, false)
-        );
-
         driver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileHeld(
                 new intakeCommand(intake, door, -1)
         );
